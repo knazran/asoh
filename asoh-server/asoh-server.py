@@ -16,8 +16,8 @@ def main():
 @app.route('/getclinic', methods=['GET'])
 def getClinics():
     state = request.args.get('state', type = str)
-    lon1 = request.args.get('long', type = int)
-    lat1 = request.args.get('lat',type = int)
+    lon1 = request.args.get('long', type = float)
+    lat1 = request.args.get('lat',type = float)
     #state = 'WP KUALA LUMPUR'
     #lon1 = 100
     #lat1 = 60
