@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar color='navbarColor'>
+    <ion-title>
+      ROI
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <!-- <ion-card>
+  	<ion-card-header> Global Shit Show</ion-card-header>
+    <ion-card-content>
+      <p>Some shit show stuff</p>
+    </ion-card-content>
+  </ion-card>
+ -->
+  <ion-card>
+    <ion-card-header> Global Coin Market</ion-card-header>
+    <ion-card-content>
+      <p> <strong>Market Cap: </strong> {{ coin_stats.total_market_cap_usd | currency:'USD':'symbol':'4.2-2' }}</p>
+      <p> <strong>Total Supply: </strong> {{ coin_stats.total_24h_volume_usd | number:'4.2-2'}}</p>
+      <!-- <p> <strong>Last Updated: </strong> {{ coin_last_updated | date:'HH:mm'}} today</p> -->
+    </ion-card-content>
+  </ion-card>
+
+	<stock-card (click)='goToCoinInfoPage(i);' *ngFor="let ticker of coin_market_tickers; let i = index"
+		[coin_name_in]="ticker.name"
+		[coin_symbol_in]="ticker.symbol"
+		[price_usd_in]="ticker.price_usd"
+    [percent_change_24h]="ticker.percent_change_24h"
+    [stock_color] ="getStockPerformanceColor(ticker.percent_change_24h)"
+		>
+	</stock-card>
+  	
+</ion-content>
+

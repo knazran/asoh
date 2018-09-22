@@ -1,0 +1,29 @@
+<!--
+  Generated template for the CommentInputPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color='navbarColor'>
+  	<ion-buttons>
+			<button ion-button (click)="dismiss()">Close</button>
+		</ion-buttons>
+    <ion-title>{{ coin_name }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<div class='coin-price'>
+		<h2 >{{ coin_symbol }} : ${{ coin_price_usd }} </h2>
+	</div>
+	<ion-item>
+    <ion-label color="primary" stacked> Comment Box </ion-label>
+    <ion-input [(ngModel)]="commentBox" placeholder="Write a comment..."></ion-input>
+
+  </ion-item>
+  <button item-right ion-button round (click)="dismiss()">Comment</button>
+</ion-content>
