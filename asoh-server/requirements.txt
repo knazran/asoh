@@ -1,9 +1,10 @@
 Flask==0.12.2
 Flask-Cors==3.0.3
 Jinja2==2.9.6
-numpy==1.13.0
+numpy==1.14.2
 pandas==0.20.3
 Werkzeug==0.12.2
 gunicorn==19.7.1
 google-cloud-storage==1.7.0
 coinmarketcap==4.2.1
+python-firebase==1.2

@@ -1,13 +1,17 @@
 from flask import Flask, render_template, jsonify, request, send_file, abort
 #from werkzeug.wrappers import Request, Response
 import json
-#from flask_cors import CORS, cross_origin
+from flask_cors import CORS, cross_origin
 #import datetime
 from firebase import firebase
 import numpy as np
 
+# Initialize Firebase credentials
+fb = firebase.FirebaseApplication('https://asoh-mampu.firebaseio.com/', None)
+authentication = firebase.FirebaseAuthentication('THIS_IS_MY_SECRET', 'gohjinnshyan@gmail.com')
+
 app = Flask(__name__)
-#CORS(app)
+CORS(app)
 
 @app.route("/")
 def main():
@@ -16,8 +20,8 @@ def main():
 @app.route('/getclinic', methods=['GET'])
 def getClinics():
     state = request.args.get('state', type = str)
-    lon1 = request.args.get('long', type = int)
-    lat1 = request.args.get('lat',type = int)
+    lon1 = request.args.get('long', type = float)
+    lat1 = request.args.get('lat',type = float)
     #state = 'WP KUALA LUMPUR'
     #lon1 = 100
     #lat1 = 60
@@ -61,9 +65,6 @@ def getClinics():
 
 if __name__ == "__main__":
     # app.config['TEMPLATES_AUTO_RELOAD']=True
-    fb = firebase.FirebaseApplication('https://asoh-mampu.firebaseio.com/', None)
-    authentication = firebase.FirebaseAuthentication('THIS_IS_MY_SECRET', 'gohjinnshyan@gmail.com')
-    user = authentication.get_user()
     # app.run('0.0.0.0', debug=True,use_reloader=True)
     #app.run(debug=True,use_reloader=True)
     app.run()
