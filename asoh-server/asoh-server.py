@@ -9,7 +9,7 @@ CORS(app)
 
 @app.route("/")
 def main():
-    return "Welcome! This is Roi's service server"
+    return "Welcome! This is Asoh's service server for MAMPU Open Data Hackathon"
 
 @app.route('/api/v1.0/getTickers', methods=['GET'])
 def getCoinTickers():
