@@ -54,7 +54,12 @@ def getClinics():
     top5_index = sorted(haversine(lon1,lat1,[i[1] for i in result_list],[i[2] for i in result_list]),key = lambda x:x[1])[:5]
     top5_clinic = list(zip(*[i for i in result_list if result_list.index(i) in list(zip(*top5_index))[0]]))[0]
     result_json = {i:clinic_data_json[i] for i in clinic_data_json if i in top5_clinic}
-    return jsonify({'result': result_json}), 200
+    result_list = []
+    for no,i in enumerate(result_json):
+        temp_json = result_json[i]
+        temp_json.update({'NAMA_KLINIK':i,'JARAK(km)':round(top5_index[no][1],0)})
+        result_list.append(temp_json)
+    return jsonify({'result': result_list}), 200
 
 @app.route('/getnutrients', methods=['GET'])
 def getNutrients():
