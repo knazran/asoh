@@ -1,94 +1,120 @@
-import { Component, NgModule} from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 
-import { CoinInfoPage } from '../coin-info/coin-info'
-import { CoinmarketcapProvider, CoinTickerInfo} from '../../providers/coinmarketcap/coinmarketcap'
+import { LoginPage } from '../login/login';
+import { ClinicListPage } from '../clinic-list/clinic-list';
+
+import { AngularFireAuth } from 'angularfire2/auth';
+import { LoadingProvider } from '../../providers/loading/loading';
+import { ClinicsProvider } from '../../providers/clinics/clinics'
 import { Observable } from "rxjs/Rx";
 
-import {BillionPipe} from '../../pipes/billion/billion';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html',
-  // pipes: [BillionPipe]
+  templateUrl: 'home.html'
 })
-
-
 export class HomePage {
-	inputcoin:string = "Bitcoin";
 
-	coin_market_tickers : Array<CoinTickerInfo> = [];
-	coin_stats : any = {
-		"total_market_cap_usd" :"",
-		"total_24h_volume_usd": ""
-	}
+	userData: any;
+  displayName: string;
+  geoLocData : any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
-  						public coinmarketcap: CoinmarketcapProvider) {
+  constructor(public afAuth: AngularFireAuth, public navCtrl: NavController, public modalCtrl: ModalController,
+            public navParam: NavParams,public loadingProvider : LoadingProvider,
+            public clinicsProv : ClinicsProvider,  private geolocation: Geolocation) {
+
+  		this.userData = this.navParam.get('res');
+      this.getGeolocationData()
+  		console.log('userData',this.userData);
 
   }
 
-  ionViewWillEnter(){
-      this.GetCoinTickers().then((res) => {
+  ionViewDidLoad() {
+    let currentUser = this.afAuth.auth.currentUser;
+    this.userData = currentUser;
+    console.log('userData',this.userData);
 
-      }).catch(e => {
-			    console.log(e);
-			});
-			this.GetCoinStats().then((res) => {
+    if (currentUser.displayName){
+      this.displayName = currentUser.displayName
+    } else {
+      // Show the first time registration modal
 
-      }).catch(e => {
-			    console.log(e);
-			});
+    }
   }
 
-  GetCoinTickers() : Promise<any>{
-		return new Promise((resolve, reject) => {
-		  // let payload : Object = {"uid": "testuid", "groupid": this.group_info.groupid, "index": index}
-		  this.coinmarketcap.GetTickers().subscribe(
-		     data => {
-		       this.coin_market_tickers = data['tickers']
-		       resolve(data);
-		     },
-		     error => {
-		       console.error("Error: Can't contact server");
-		       this.coin_market_tickers = CoinmarketcapProvider.coin_market_dummy
-		       reject();
-		       return Observable.throw(error);
-		     }
-		  );
-		});
-	}
+  getGeolocationData(){
+    // this.loadingProvider.startLoading();
+    this.geolocation.getCurrentPosition().then((resp) => {
+      let geoData = {'lat': resp.coords.latitude, 'lng':resp.coords.longitude}
+      this.geoLocData = geoData
+      console.log(geoData)
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+  }
 
-  GetCoinStats() : Promise<any>{
-		return new Promise((resolve, reject) => {
-		  // let payload : Object = {"uid": "testuid", "groupid": this.group_info.groupid, "index": index}
-		  this.coinmarketcap.GetStats().subscribe(
-		     data => {
-		     	 console.log("Okay")
-		       console.log(data);
-		       this.coin_stats = data['stats']
-		       resolve(data);
-		     },
-		     error => {
-		       console.error("Error: Can't contact server");
-		       // this.coin_market_tickers = CoinmarketcapProvider.coin_market_dummy
-		       reject();
-		       return Observable.throw(error);
-		     }
-		  );
-		});
-	}
+  getClinics(): Promise<any>{
+    let lat = String(this.geoLocData.lat);
+    let long = String(this.geoLocData.lng);
+    let state = "WP KUALA LUMPUR"
 
-	  /* Returns attribute coloring - move to directive? */
-	getStockPerformanceColor(type: any): string {
-    // console.log(type)
-		if (parseInt(type) > 0) return '#32DB64'; //Green
-		// if (parseInt(type) === 0) return '#FFFF66'; //Yellow
-		if (parseInt(type) <= 0) return '#FF0000'; //Red	
-		else {console.log('NO COLOR'); return '#32DB64'};
-	}
+    this.loadingProvider.startLoading();
+    return new Promise((resolve, reject) => {
+      // let payload : Object = {"uid": "testuid", "groupid": this.group_info.groupid, "index": index}
+      this.clinicsProv.GetNearestClinics(state,long,lat).subscribe(
+         data => {
+           let geoData = data.result;
+           console.log('clinics data', geoData)
+           resolve(geoData);
+           this.loadingProvider.stopLoading();
 
-	goToCoinInfoPage(index: number){
-	  this.navCtrl.push(CoinInfoPage, {coin_info: this.coin_market_tickers[index]});
-	}
+           // HACKY SOLUTION. RETURN RESULTS AS ARRAY PLEASE
+           // let geoDataKeys = Object.keys(geoData);
+           // let geoDataArr = []
+           // for (let idx of geoDataKeys) { 
+           //     geoDataArr.push(geoData[idx]);
+           // }
+           console.log('clinics data arr', geoData)
+           this.goToNearbyClinicsView(geoData);
+         },
+         error => {
+           console.error("Error: Can't contact server");
+           reject();
+           this.loadingProvider.stopLoading();
+           return Observable.throw(error);
+         }
+      );
+    });
+  }
+
+  goToNearbyClinicsView(geolocationData){
+    this.navCtrl.push(ClinicListPage, {clinics_data: geolocationData});
+  }
+
+  showClinicsView(geolocationData){
+    let modal_args = {
+      clinics_data : geolocationData
+    }
+    let comment_modal = this.modalCtrl.create(ClinicListPage, modal_args);
+
+    comment_modal.onDidDismiss(comment => {
+     console.log(comment);
+     if (comment === ""){
+       return;
+     }
+   });
+
+    comment_modal.present();
+  }
+
+  logout(){
+    this.loadingProvider.startLoading();
+  	this.afAuth.auth.signOut();
+  	this.navCtrl.setRoot(LoginPage);
+    this.loadingProvider.stopLoading();
+
+  }
+
 }
