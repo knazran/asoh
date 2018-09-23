@@ -3,6 +3,8 @@ import { NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
 import { ClinicListPage } from '../clinic-list/clinic-list';
+import { ChildrenNutritionPlanPage } from '../children-nutrition-plan/children-nutrition-plan';
+import { ChildrenProfilesPage } from '../children-profiles/children-profiles';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import { LoadingProvider } from '../../providers/loading/loading';
@@ -38,6 +40,7 @@ export class HomePage {
 
     if (currentUser.displayName){
       this.displayName = currentUser.displayName
+      console.log('DisplayName', this.displayName)
     } else {
       // Show the first time registration modal
 
@@ -70,12 +73,6 @@ export class HomePage {
            resolve(geoData);
            this.loadingProvider.stopLoading();
 
-           // HACKY SOLUTION. RETURN RESULTS AS ARRAY PLEASE
-           // let geoDataKeys = Object.keys(geoData);
-           // let geoDataArr = []
-           // for (let idx of geoDataKeys) { 
-           //     geoDataArr.push(geoData[idx]);
-           // }
            console.log('clinics data arr', geoData)
            this.goToNearbyClinicsView(geoData);
          },
@@ -93,21 +90,30 @@ export class HomePage {
     this.navCtrl.push(ClinicListPage, {clinics_data: geolocationData});
   }
 
-  showClinicsView(geolocationData){
-    let modal_args = {
-      clinics_data : geolocationData
-    }
-    let comment_modal = this.modalCtrl.create(ClinicListPage, modal_args);
-
-    comment_modal.onDidDismiss(comment => {
-     console.log(comment);
-     if (comment === ""){
-       return;
-     }
-   });
-
-    comment_modal.present();
+  goToChildrenNutritionPage(){
+    this.navCtrl.push(ChildrenNutritionPlanPage);
   }
+  
+  goToChildrenProfilePage(){
+    this.navCtrl.push(ChildrenProfilesPage);
+  }
+
+  
+  // showClinicsView(geolocationData){
+  //   let modal_args = {
+  //     clinics_data : geolocationData
+  //   }
+  //   let comment_modal = this.modalCtrl.create(ClinicListPage, modal_args);
+
+  //   comment_modal.onDidDismiss(comment => {
+  //    console.log(comment);
+  //    if (comment === ""){
+  //      return;
+  //    }
+  //  });
+
+  //   comment_modal.present();
+  // }
 
   logout(){
     this.loadingProvider.startLoading();

@@ -10,9 +10,9 @@
       <!-- <button ion-button tappable >
         <ion-icon name="notifications"></ion-icon>
       </button> -->
-      <button ion-button tappable style="font-size:20px" (click)="logout()" >
+      <!-- <button ion-button tappable style="font-size:20px" (click)="logout()" >
         <ion-icon name="exit"></ion-icon>
-      </button>
+      </button> -->
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -26,24 +26,41 @@
             <h2 class="location text-dark">Hello Ibubapa!</h2>
         </ion-col>
     </ion-row>
+    <ion-row>
+      
+    </ion-row>
   </ion-grid>
 
   <div cards>
   <ion-grid class="grid-full">
     <ion-row>
         <ion-col width-50 offset-25 >
-          <ion-card style="background-color: #44e82e">
+          <ion-card style="background-color: #44e82e" (click)="goToChildrenNutritionPage()">
             <ion-icon name="restaurant" ></ion-icon>
             <h2 class="location text-dark"><strong>Pelan Nutrisi Seharian</strong></h2>
-            <!-- <div class="icon"><img src="{{weather.icon_url}}" alt="weather"></div>
-            <h3 class="desc">{{weather.weather}}</h3>
-            <h1 class="temp">{{weather.temp_c}}&deg;</h1> -->
           </ion-card>
         </ion-col>
         <ion-col width-50 offset-25 (click)='getClinics()'>
         <ion-card style="background-color: #b18fef">
           <ion-icon name="medkit" ></ion-icon>
           <h2 class="location text-dark"><strong>Carian Klinik Kesihatan</strong></h2>
+        </ion-card>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col width-50 offset-25 >
+          <ion-card style="background-color: #7fb0ff" (click)="goToChildrenProfilePage()">
+            <ion-icon name="people" ></ion-icon>
+            <h2 class="location text-dark"><strong>Profil Anak-Anak</strong></h2>
+            <br>
+          </ion-card>
+        </ion-col>
+        <ion-col width-50 offset-25>
+        <ion-card style="background-color: #fffa7f">
+          <ion-icon name="pizza" ></ion-icon>
+          <h2 class="location text-dark"><strong>Panduan Nutrisi</strong></h2>
+          <br>
         </ion-card>
         </ion-col>
     </ion-row>

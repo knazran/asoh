@@ -123,12 +123,6 @@ def updateNutrients():
     balance_dict.update({'ID':target})
     fb.put('/children',target,balance_dict)
     return jsonify({'result':balance_dict}),200
-# @app.route('/api/v1.0/getTimeSeries', methods=['GET'])
-# def getCoinTimeSeries():
-#   start_of_2016 = datetime.date(2016, 1, 1).isoformat()
-#   ohlcv_historical = coin_api.ohlcv_historical_data('BITSTAMP_SPOT_BTC_USD', {'period_id': '1MTH', 'time_start': start_of_2016})
-#   json.dump(ohlcv_historical, open('historical-btc-usd', 'w'))
-#   return jsonify({'ohlcv_historical': ohlcv_historical})
 
 if __name__ == "__main__":
     # app.config['TEMPLATES_AUTO_RELOAD']=True

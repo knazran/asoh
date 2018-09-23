@@ -17,6 +17,10 @@ import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { ForgetPage } from '../pages/forget/forget';
 import { ClinicListPage } from '../pages/clinic-list/clinic-list';
+import { ChildrenNutritionPlanPage } from '../pages/children-nutrition-plan/children-nutrition-plan';
+import { ParentProfilePage } from '../pages/parent-profile/parent-profile';
+import { ChildrenProfilesPage } from '../pages/children-profiles/children-profiles';
+import { PlanNutritionPage } from '../pages/plan-nutrition/plan-nutrition';
 
 //Angular Firebase Module
 import { AngularFireModule } from 'angularfire2';
@@ -25,6 +29,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { LoadingProvider } from '../providers/loading/loading';
 import { ClinicsProvider } from '../providers/clinics/clinics';
 import { HttpClientModule} from '@angular/common/http';
+import { NutritionProvider } from '../providers/nutrition/nutrition';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBH-IBYbSgeJ8xvSZaLKCcxuFeDt7Ij-I4",
@@ -42,7 +47,11 @@ export const firebaseConfig = {
     LoginPage,
     RegisterPage,
     ForgetPage,
-    ClinicListPage
+    ClinicListPage,
+    ChildrenNutritionPlanPage,
+    ParentProfilePage,
+    ChildrenProfilesPage,
+    PlanNutritionPage
   ],
   imports: [
     BrowserModule,
@@ -59,7 +68,11 @@ export const firebaseConfig = {
     LoginPage,
     RegisterPage,
     ForgetPage,
-    ClinicListPage
+    ClinicListPage,
+    ChildrenNutritionPlanPage,
+    ParentProfilePage,
+    ChildrenProfilesPage,
+    PlanNutritionPage
   ],
   providers: [
     StatusBar,
@@ -73,6 +86,7 @@ export const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     LoadingProvider,
     ClinicsProvider,
+    NutritionProvider,
   ]
 })
 export class AppModule {}

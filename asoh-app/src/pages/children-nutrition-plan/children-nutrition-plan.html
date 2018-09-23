@@ -1,0 +1,152 @@
+<ion-header class="header-main">
+  <ion-navbar color="primary">
+    <ion-title>
+      <strong>Pelan Nutrisi Anak-Anak</strong> 
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<!-- <ion-list>
+		<ion-item *ngFor="let child of children_list | async">
+			<h2>{{ child.NAMA }}</h2>
+			<h2>{{ child.UMUR }}</h2>
+		</ion-item>
+	</ion-list> -->
+	<ion-grid class="card" padding *ngFor="let child of children_list | async">
+    <ion-row>
+	    <ion-col col-4>
+	      <div class="user-avatar">
+	        <img src="../assets/imgs/my_beautiful_pic.png">
+	      </div>
+	  	</ion-col>
+		  <ion-col padding-top col-8>
+		    <h2 ion-text class="location text-dark">
+		      {{child.NAMA}} 
+		    </h2>
+		    <span ion-text color="dark"><strong>{{child.UMUR}} Tahun</strong></span>
+		    <br>
+		    <span ion-text color="light"><strong>{{child.JANTINA | titlecase}} </strong></span>
+		  </ion-col>
+    </ion-row>
+    <hr>
+    <ion-row>
+    	<ion-col width-100>
+	    	<h3 ion-text class="location text-dark" center>
+		      Rumusan Nutrisi 
+		    </h3>
+    	    <ion-list>
+    	        <ion-item>
+    	        	<strong>Kalori:</strong> 
+    	        	<button color="secondary" ion-button item-right>
+    	        	100%
+    	        	</button>
+    	        </ion-item>
+    	        <ion-item>
+    	            <strong>Protein:</strong> 
+    	            <button color="secondary" ion-button item-right>
+    	        	100%
+    	        	</button>
+    	        </ion-item>
+    	         <ion-item>
+    	            <strong>Buah-Buahan:</strong> 
+    	            <button color="secondary" ion-button item-right>
+    	        	100%
+    	        	</button>
+    	        </ion-item>
+    	         <ion-item>
+    	            <strong>Sayur-Sayuran:</strong> 
+    	            <button color="secondary" ion-button item-right>
+    	        	100%
+    	        	</button>
+    	        </ion-item>
+    	        <ion-item>
+    	            <strong>Bijirin:</strong> 
+    	            <button color="secondary" ion-button item-right>
+    	        	100%
+    	        	</button>
+    	        </ion-item>
+    	        <ion-item>
+    	            <strong>Tenusu:</strong> 
+    	            <button color="secondary" ion-button item-right>
+    	        	100%
+    	        	</button>
+    	        </ion-item>
+    	    </ion-list>
+    	</ion-col>
+   
+    </ion-row>
+    <button ion-button icon-start block no-margin color="primary" class="round" tappable (click)="goToPlanNutritionPage()">
+    	<ion-icon name="restaurant"></ion-icon> Pelan Nutrisi
+  	</button>
+  </ion-grid>
+  <br>
+  <!-- <ion-grid class="card" padding>
+    <ion-row>
+	    <ion-col col-4>
+	      <div class="user-avatar">
+	        <img src="../assets/imgs/my_beautiful_pic.png">
+	      </div>
+	  	</ion-col>
+		  <ion-col padding-top col-8>
+		    <h2 ion-text class="location text-dark">
+		      Ahmad 
+		    </h2>
+		    <span ion-text color="dark"><strong>12 Tahun</strong></span>
+		    <br>
+		    <span ion-text color="light"><strong>Lelaki</strong></span>
+		  </ion-col>
+    </ion-row>
+    <hr>
+    <ion-row>
+    	<ion-col width-100>
+	    	<h3 ion-text class="location text-dark" center>
+		      Rumusan Nutrisi 
+		    </h3>
+    	    <ion-list>
+    	        <ion-item>
+    	        	<strong>Kalori:</strong> 
+    	        	<button color="secondary" ion-button item-right>
+    	        	100%
+    	        	</button>
+    	        </ion-item>
+    	        <ion-item>
+    	            <strong>Protein:</strong> 
+    	            <button color="secondary" ion-button item-right>
+    	        	100%
+    	        	</button>
+    	        </ion-item>
+    	         <ion-item>
+    	            <strong>Buah-Buahan:</strong> 
+    	            <button color="secondary" ion-button item-right>
+    	        	100%
+    	        	</button>
+    	        </ion-item>
+    	         <ion-item>
+    	            <strong>Sayur-Sayuran:</strong> 
+    	            <button color="secondary" ion-button item-right>
+    	        	100%
+    	        	</button>
+    	        </ion-item>
+    	        <ion-item>
+    	            <strong>Bijirin:</strong> 
+    	            <button color="secondary" ion-button item-right>
+    	        	100%
+    	        	</button>
+    	        </ion-item>
+    	        <ion-item>
+    	            <strong>Tenusu:</strong> 
+    	            <button color="secondary" ion-button item-right>
+    	        	100%
+    	        	</button>
+    	        </ion-item>
+    	    </ion-list>
+    	</ion-col>
+    </ion-row>
+    <button ion-button icon-start block no-margin color="primary" class="round" tappable (click)="doSearch()">
+    	<ion-icon name="restaurant"></ion-icon> Pelan Nutrisi
+  	</button>
+  </ion-grid> -->
+
+</ion-content>
