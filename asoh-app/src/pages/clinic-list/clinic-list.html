@@ -4,33 +4,39 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-
-  <ion-navbar class="header-main">
-    <ion-title class="color-txt">Klinik Kesihatan Berdekatan</ion-title>
+<ion-header class="header-main">
+  <ion-navbar color="primary">
+    <ion-title>
+      <strong>Carian Klinik Berdekatan</strong> 
+    </ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-	<ion-list>
+	<div class="clinic card" *ngFor="let clinic of clinicsList; let i = index" tappable margin-bottom>
+	  <!-- <div class="background border-bottom"> -->
+	    <!-- <div class="background-filter rlt"> -->
+	      <div padding-left padding-right padding-top>
+	        <h4 class="pull-left" ion-text>{{ clinic.nama_klinik }}</h4>
+	        <div class="clear"></div>
+	      </div>
+	    <!-- </div> -->
+	  <!-- </div> -->
+	  <div class="padding-sm primary-bg">
+	    <ion-icon name="time" class="text-white"></ion-icon>
+	    <span ion-text class="text-white">{{ clinic.jarak }} km</span>
+	    <br>
+	    <span ion-text color="light"><strong>No Telefon</strong> {{ clinic.NO_TELEFON}}</span>
+	  </div>
+	</div>
+
+
+	<!-- <ion-list>
 		<ion-item *ngFor="let clinic of clinicsList; let i = index">
-		<!-- <ion-card> -->
 		<h2> <strong>{{clinic.nama_klinik}} </strong> </h2>
 		<p> <strong>Jarak </strong> {{ clinic.jarak }} km</p>
 		<p> <strong>No Telefon</strong> {{ clinic.NO_TELEFON}}</p>
-		<!-- </ion-card> -->
-		
-		<!-- <p>
-			{{ coin_name_in }}
-	    </p>
-		  <button class="price-button" color="primary" ion-button item-right>
-		  $ {{ price_usd_in | number : '1.2-2'}}
-		  </button>
-		  <button class="change-button" [style.background-color]="stock_color" ion-button item-right>
-		  {{ percent_change_24h | number : '1.2-2'}} %
-		  </button> -->
 		</ion-item>
-	</ion-list>
+	</ion-list> -->
 </ion-content>

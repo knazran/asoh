@@ -1,8 +1,54 @@
 page-clinic-list {
 	.header-main {
-		background-color: $black !important;
+		background-color: #4286f4;
+	}
+	/*.toolbar-ios {
+		ion-title {
+			left: 50%;
+			display: block;
+			margin: 0 auto;
+			@include calc('max-width', '100% - 90px');
+			width: auto;
+			@include transform(translateX(-50%));
+			p {
+				margin: 12px 0;
+			}
+		}
+	}*/
+	.header-btn{
+		margin-left: -35px !important;
+		color: #FFF !important;
 	}
 	.color-txt{
-		color: $white !important;
+		color: #FFF !important;
 	}
+
+	.clinics {
+		.card {
+			border-radius: 1rem
+		}
+	  .clinic {
+	  	h4 {
+	  	  margin-top: 1rem;
+	  	}
+	    overflow: hidden;
+
+	    .background {
+	      background-size: 100% auto;
+	      background-position: center;
+
+	      .background-filter {
+	        height: 16rem;
+	        background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
+
+	        .align-bottom {
+	          width: 100%;
+
+	          
+	        }
+	      }
+	    }
+	  }
+	}
+	
 }
