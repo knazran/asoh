@@ -1,36 +1,48 @@
-<ion-header>
-  <ion-navbar color='navbarColor'>
+<!-- <ion-header class="header-main">
+  <ion-navbar color="dark">
     <ion-title>
-      ROI
+    {{userData.email}}
     </ion-title>
+    <ion-buttons>
+	    <button ion-button clear (click)="logout()">
+	      	<ion-icon name="md-exit"></ion-icon>
+	    </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-header class="header-main">
+  <ion-navbar >
+    <ion-title >
+    <p class="color-txt">Asoh</p>
+    </ion-title>
+      <ion-buttons right>
+        <button ion-button clear (click)="logout()">
+            <ion-icon name="md-exit"></ion-icon>
+        </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <!-- <ion-card>
-  	<ion-card-header> Global Shit Show</ion-card-header>
-    <ion-card-content>
-      <p>Some shit show stuff</p>
-    </ion-card-content>
-  </ion-card>
- -->
+
   <ion-card>
-    <ion-card-header> Global Coin Market</ion-card-header>
+    <ion-card-header> Hello Ibubapa</ion-card-header>
     <ion-card-content>
-      <p> <strong>Market Cap: </strong> {{ coin_stats.total_market_cap_usd | currency:'USD':'symbol':'4.2-2' }}</p>
-      <p> <strong>Total Supply: </strong> {{ coin_stats.total_24h_volume_usd | number:'4.2-2'}}</p>
+      <!-- <p> <strong>Market Cap: </strong> {{ coin_stats.total_market_cap_usd | currency:'USD':'symbol':'4.2-2' }}</p>
+      <p> <strong>Total Supply: </strong> {{ coin_stats.total_24h_volume_usd | number:'4.2-2'}}</p> -->
       <!-- <p> <strong>Last Updated: </strong> {{ coin_last_updated | date:'HH:mm'}} today</p> -->
     </ion-card-content>
   </ion-card>
 
-	<stock-card (click)='goToCoinInfoPage(i);' *ngFor="let ticker of coin_market_tickers; let i = index"
-		[coin_name_in]="ticker.name"
-		[coin_symbol_in]="ticker.symbol"
-		[price_usd_in]="ticker.price_usd"
-    [percent_change_24h]="ticker.percent_change_24h"
-    [stock_color] ="getStockPerformanceColor(ticker.percent_change_24h)"
-		>
-	</stock-card>
-  	
-</ion-content>
+  <ion-card (click)='getClinics()'>
+    <ion-card-header> Carian Klinik Kesihatan</ion-card-header>
+    <ion-card-content>
+      <!-- <p> <strong>Market Cap: </strong> {{ coin_stats.total_market_cap_usd | currency:'USD':'symbol':'4.2-2' }}</p>
+      <p> <strong>Total Supply: </strong> {{ coin_stats.total_24h_volume_usd | number:'4.2-2'}}</p> -->
+      <!-- <p> <strong>Last Updated: </strong> {{ coin_last_updated | date:'HH:mm'}} today</p> -->
+    </ion-card-content>
+  </ion-card>
 
+
+</ion-content>

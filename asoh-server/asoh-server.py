@@ -59,7 +59,11 @@ def getClinics():
     result_list = []
     for no,i in enumerate(result_json):
         temp_json = result_json[i]
+<<<<<<< HEAD
         temp_json.update({'NAMA_KLINIK':i,'JARAK':round(top5_index[no][1],0)})
+=======
+        temp_json.update({'nama_klinik':i,'jarak':round(top5_index[no][1],2)})
+>>>>>>> 24b0772d18d05638c1beef1223ee74a3f9207e38
         result_list.append(temp_json)
     return jsonify({'result': result_list}), 200
 
@@ -67,6 +71,7 @@ def getClinics():
 def getNutrients():
     age = request.args.get('age', type = int)
     gender = request.args.get('gender', type = str)
+<<<<<<< HEAD
     target = request.args.get('target', type = str)
     khasiat_data = fb.get('/foods','nutrition_info')
     user = 'ali'
@@ -123,6 +128,18 @@ def updateNutrients():
     balance_dict.update({'NAMA':target})
     fb.put('/children',target,balance_dict)
     return jsonify({'result':balance_dict}),200
+=======
+    khasiat_data = fb.get('/foods','nutrition_info')
+    khasiat_data_json = json.loads(khasiat_data)
+    khasiat_dict = {i:j for i,j in khasiat_data_json[str(age) + '-' + gender].items() if i not in ['JANTINA','UMUR']}
+    result_json = {}
+    for i in zip(list(khasiat_dict.keys()),['PURATA_KALORI','PURATA_PROTEIN(Gram)',
+                                       'PURATA_BUAH-BUAHAN(Gram)','PURATA_SAYUR-SAYURAN(Gram)',
+                                       'PURATA_BIJIRIN(Gram)','PURATA_TENUSU(Gram)'],[1,28.3495,150,190,28.3495,245]):
+        result_json[i[1]] = round(khasiat_dict[i[0]]*i[2],2)
+    result_json.update({i:j for i,j in khasiat_data_json[str(age) + '-' + gender].items() if i in ['JANTINA','UMUR']})
+    return jsonify({'result':result_json}),200
+>>>>>>> 24b0772d18d05638c1beef1223ee74a3f9207e38
 # @app.route('/api/v1.0/getTimeSeries', methods=['GET'])
 # def getCoinTimeSeries():
 #   start_of_2016 = datetime.date(2016, 1, 1).isoformat()

@@ -3,75 +3,76 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
 
+import { Camera } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { FilePath } from '@ionic-native/file-path';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { Facebook } from '@ionic-native/facebook'
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-// import { CoinInfoPage } from '../pages/coin-info/coin-info';
-import { CommentInputPageModule } from '../pages/comment-input/comment-input.module'
-import { CoinInfoPageModule } from '../pages/coin-info/coin-info.module';
-// Components
-// import { ComponentsModule } from "../components/components.module"
-import { StockCardComponent } from "../components/stock-card/stock-card"
-import { CommentBoxComponent } from "../components/comment-box/comment-box"
+import { LoginPage } from '../pages/login/login';
+import { RegisterPage } from '../pages/register/register';
+import { ForgetPage } from '../pages/forget/forget';
+import { ClinicListPage } from '../pages/clinic-list/clinic-list';
 
-//Providers
-import { CoinmarketcapProvider } from '../providers/coinmarketcap/coinmarketcap';
-
-// import {BillionPipe} from '../pipes/billion/billion';
-
-// Import the AF Module
+//Angular Firebase Module
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
- 
- 
-// AF Settings
+import { LoadingProvider } from '../providers/loading/loading';
+import { ClinicsProvider } from '../providers/clinics/clinics';
+import { HttpClientModule} from '@angular/common/http';
+
 export const firebaseConfig = {
-  apiKey: "AIzaSyB-vdY6GLyhkO4FHc1ukwf8ym-QSunUdGg",
-    authDomain: "roi-app-3a77b.firebaseapp.com",
-    databaseURL: "https://roi-app-3a77b.firebaseio.com",
-    projectId: "roi-app-3a77b",
-    storageBucket: "roi-app-3a77b.appspot.com",
-    messagingSenderId: "343868096959"
+  apiKey: "AIzaSyBH-IBYbSgeJ8xvSZaLKCcxuFeDt7Ij-I4",
+    authDomain: "asoh-mampu.firebaseapp.com",
+    databaseURL: "https://asoh-mampu.firebaseio.com",
+    projectId: "asoh-mampu",
+    storageBucket: "asoh-mampu.appspot.com",
+    messagingSenderId: "565829672911"
 };
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    StockCardComponent,
-    CommentBoxComponent
-    // BillionPipe
+    LoginPage,
+    RegisterPage,
+    ForgetPage,
+    ClinicListPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule,
-    HttpClientModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    CoinInfoPageModule,
-    CommentInputPageModule,
-    // ComponentsModule
-
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    // CommentInputPage
+    LoginPage,
+    RegisterPage,
+    ForgetPage,
+    ClinicListPage
   ],
   providers: [
     StatusBar,
+    Camera,
+    File,
+    FilePath,
+    FileTransfer,
+    Facebook,
+    Geolocation,
     SplashScreen,
-    AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    CoinmarketcapProvider
+    LoadingProvider,
+    ClinicsProvider,
   ]
 })
 export class AppModule {}
