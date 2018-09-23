@@ -6,12 +6,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
+import { ClinicListPage } from '../pages/clinic-list/clinic-list';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage:any = LoginPage;
+
+  appMenuItems: Array<any>;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
     public afAuth: AngularFireAuth) {
@@ -21,6 +24,10 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+
+    this.appMenuItems = [
+      {title: 'Carian Klinik', component: ClinicListPage, icon: 'home'},
+    ];
 
     this.afAuth.authState
         .subscribe(

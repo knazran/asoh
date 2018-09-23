@@ -1,17 +1,63 @@
-<!-- <ion-header class="header-main">
-  <ion-navbar color="dark">
-    <ion-title>
-    {{userData.email}}
-    </ion-title>
-    <ion-buttons>
-	    <button ion-button clear (click)="logout()">
-	      	<ion-icon name="md-exit"></ion-icon>
-	    </button>
-    </ion-buttons>
-  </ion-navbar>
-</ion-header> -->
+
 
 <ion-header class="header-main">
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title center>
+      <strong>Asoh App</strong> 
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button tappabl >
+        <ion-icon name="notifications"></ion-icon>
+      </button>
+      <button ion-button tappable>
+        <ion-icon name="cog"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="animated fadeIn common-bg">
+
+  <ion-grid class="card" padding>
+    <ion-row>
+        <ion-col width-50 offset-25>
+            <h2 class="location text-dark">Hello Ibubapa!</h2>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div cards>
+  <ion-grid class="grid-full">
+    <ion-row>
+        <ion-col width-50 offset-25 >
+          <ion-card style="background-color: #44e82e">
+            <ion-icon name="restaurant" ></ion-icon>
+            <h2 class="location text-dark"><strong>Pelan Nutrisi Seharian</strong></h2>
+            <!-- <div class="icon"><img src="{{weather.icon_url}}" alt="weather"></div>
+            <h3 class="desc">{{weather.weather}}</h3>
+            <h1 class="temp">{{weather.temp_c}}&deg;</h1> -->
+          </ion-card>
+        </ion-col>
+        <ion-col width-50 offset-25 (click)='getClinics()'>
+        <ion-card style="background-color: #b18fef">
+          <ion-icon name="medkit" ></ion-icon>
+          <h2 class="location text-dark"><strong>Carian Klinik Kesihatan</strong></h2>
+        </ion-card>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+  </div>
+
+  <!-- <button ion-button icon-start block no-margin color="primary" class="round" tappable>
+    <ion-icon name="search"></ion-icon> Search
+  </button> -->
+
+</ion-content>
+<!-- <ion-header class="header-main">
   <ion-navbar >
     <ion-title >
     <p class="color-txt">Asoh</p>
@@ -22,27 +68,22 @@
         </button>
       </ion-buttons>
   </ion-navbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content padding>
+<!-- <ion-content padding>
 
   <ion-card>
     <ion-card-header> Hello Ibubapa</ion-card-header>
     <ion-card-content>
-      <!-- <p> <strong>Market Cap: </strong> {{ coin_stats.total_market_cap_usd | currency:'USD':'symbol':'4.2-2' }}</p>
-      <p> <strong>Total Supply: </strong> {{ coin_stats.total_24h_volume_usd | number:'4.2-2'}}</p> -->
-      <!-- <p> <strong>Last Updated: </strong> {{ coin_last_updated | date:'HH:mm'}} today</p> -->
     </ion-card-content>
   </ion-card>
 
   <ion-card (click)='getClinics()'>
     <ion-card-header> Carian Klinik Kesihatan</ion-card-header>
     <ion-card-content>
-      <!-- <p> <strong>Market Cap: </strong> {{ coin_stats.total_market_cap_usd | currency:'USD':'symbol':'4.2-2' }}</p>
-      <p> <strong>Total Supply: </strong> {{ coin_stats.total_24h_volume_usd | number:'4.2-2'}}</p> -->
-      <!-- <p> <strong>Last Updated: </strong> {{ coin_last_updated | date:'HH:mm'}} today</p> -->
     </ion-card-content>
   </ion-card>
 
 
 </ion-content>
+ -->

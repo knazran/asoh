@@ -32,8 +32,8 @@ export class ClinicsProvider {
     params_in = params_in.append('lat', lat)
 
     // CHANGE THIS
-    let get_clinics_url = this.api_url_local + "getclinic"
-    // let get_clinics_url = this.api_url_gcp + "getclinic"
+    // let get_clinics_url = this.api_url_local + "getclinic"
+    let get_clinics_url = this.api_url_gcp + "getclinic"
     
     let options = {headers : api_header};
     
