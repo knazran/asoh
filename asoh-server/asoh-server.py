@@ -5,6 +5,8 @@ from flask_cors import CORS, cross_origin
 #import datetime
 from firebase import firebase
 import numpy as np
+import re
+import string
 
 # Initialize Firebase credentials
 fb = firebase.FirebaseApplication('https://asoh-mampu.firebaseio.com/', None)
@@ -54,8 +56,73 @@ def getClinics():
     top5_index = sorted(haversine(lon1,lat1,[i[1] for i in result_list],[i[2] for i in result_list]),key = lambda x:x[1])[:5]
     top5_clinic = list(zip(*[i for i in result_list if result_list.index(i) in list(zip(*top5_index))[0]]))[0]
     result_json = {i:clinic_data_json[i] for i in clinic_data_json if i in top5_clinic}
-    return jsonify({'result': result_json}), 200
+    result_list = []
+    for no,i in enumerate(result_json):
+        temp_json = result_json[i]
+        temp_json.update({'NAMA_KLINIK':i,'JARAK':round(top5_index[no][1],0)})
+        result_list.append(temp_json)
+    return jsonify({'result': result_list}), 200
 
+@app.route('/getnutrients', methods=['GET'])
+def getNutrients():
+    age = request.args.get('age', type = int)
+    gender = request.args.get('gender', type = str)
+    target = request.args.get('target', type = str)
+    khasiat_data = fb.get('/foods','nutrition_info')
+    user = 'ali'
+    khasiat_data_json = json.loads(khasiat_data)
+    khasiat_dict = {i:j for i,j in khasiat_data_json[str(age) + '-' + gender].items() if i not in ['JANTINA','UMUR']}
+    result_json = {}
+    for i in zip(list(khasiat_dict.keys()),['PURATA_KALORI_KCAL','PURATA_PROTEIN_GRAM',
+                                       'PURATA_BUAH_BUAHAN_GRAM','PURATA_SAYUR_SAYURAN_GRAM',
+                                       'PURATA_BIJIRIN_GRAM','PURATA_TENUSU_GRAM'],[1,28.3495,150,190,28.3495,245]):
+        result_json[i[1]] = round(khasiat_dict[i[0]]*i[2],2)
+    result_json.update({i:j for i,j in khasiat_data_json[str(age) + '-' + gender].items() if i in ['JANTINA','UMUR']})
+    fb.put('/children',target,result_json)
+    result_json.update({'NAMA':target})
+    return jsonify({'result':result_json}),200
+
+@app.route('/updatenutrients', methods=['GET'])
+def updateNutrients():
+    target = request.args.get('target', type = str)
+    food = request.args.get('food', type = str)
+    gram = request.args.get('gram', type = float)
+    food_info = fb.get('/foods',food)
+    customer_data = fb.get('/children',target)
+    balance_dict = {}
+    list_fruit_vege_milk_cereal_food = ['Vegetables and vegetable products',
+                                 'Fruits and fruit products','Milk and milk products','Cereals and cereal products']
+    list_fruit_vege_milk_cereal_cus = ['PURATA_SAYUR_SAYURAN_GRAM',
+                                 'PURATA_BUAH_BUAHAN_GRAM','PURATA_TENUSU_GRAM','PURATA_BIJIRIN_GRAM']
+    if food_info['Category'] in list_fruit_vege_milk_cereal_food:
+        index = list_fruit_vege_milk_cereal_food.index(food_info['Category'])
+        balance_dict[list_fruit_vege_milk_cereal_cus[index]] = customer_data[list_fruit_vege_milk_cereal_cus[index]] - \
+                                                                gram
+        for element in zip(['PURATA_PROTEIN_GRAM','PURATA_KALORI_KCAL'],['Protein','Energy']):
+            if re.search('{}-([\d.]+)'.format(element[1]),food_info['Nutrients_Comp']):
+                balance_dict[element[0]] = customer_data[element[0]] -  \
+                    float(re.search('{}-([\d.]+)'.format(element[1]),food_info['Nutrients_Comp']).group(1))*(gram/100)    
+        for rest in [i for i in list_fruit_vege_milk_cereal_food if i!=food_info['Category']]:
+            index = list_fruit_vege_milk_cereal_food.index(rest)
+            balance_dict[list_fruit_vege_milk_cereal_cus[index]] = customer_data[list_fruit_vege_milk_cereal_cus[index]]
+    else:
+        for i in customer_data:
+            if i not in ['JANTINA','UMUR']:
+                for element in zip(['PURATA_PROTEIN','PURATA_KALORI_GRAM'],['Protein','Energy']):
+                    balance_dict[element[0]] = customer_data[element[0]]
+                    if re.search('{}-([\d.]+)'.format(element[1]),food_info['Nutrients_Comp']):
+                        balance_dict[element[0]] = customer_data[element[0]] -  \
+                                float(re.search('{}-([\d.]+)'.format(element[1]),food_info['Nutrients_Comp']).group(1))*(gram/100)
+                for element in list_fruit_vege_milk_cereal_cus:
+                    balance_dict[element] = customer_data[element]
+    #make sure no negative
+    for i in balance_dict:
+        if type(balance_dict[i])!=str and balance_dict[i]<0:
+            balance_dict[i] = 0
+    balance_dict.update({i:customer_data[i] for i,j in customer_data.items() if i in ['JANTINA','UMUR']})
+    balance_dict.update({'NAMA':target})
+    fb.put('/children',target,balance_dict)
+    return jsonify({'result':balance_dict}),200
 # @app.route('/api/v1.0/getTimeSeries', methods=['GET'])
 # def getCoinTimeSeries():
 #   start_of_2016 = datetime.date(2016, 1, 1).isoformat()
