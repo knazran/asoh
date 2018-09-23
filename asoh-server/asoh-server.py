@@ -108,7 +108,7 @@ def updateNutrients():
     else:
         for i in customer_data:
             if i not in ['JANTINA','UMUR']:
-                for element in zip(['PURATA_PROTEIN','PURATA_KALORI_GRAM'],['Protein','Energy']):
+                for element in zip(['PURATA_PROTEIN_GRAM','PURATA_KALORI_KCAL'],['Protein','Energy']):
                     balance_dict[element[0]] = customer_data[element[0]]
                     if re.search('{}-([\d.]+)'.format(element[1]),food_info['Nutrients_Comp']):
                         balance_dict[element[0]] = customer_data[element[0]] -  \
