@@ -24,20 +24,20 @@ export class ChildrenProfilesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
   			public afDatabase: AngularFireDatabase, public afAuth: AngularFireAuth) {
 
-  	let currentUser = this.afAuth.auth.currentUser;
-    let userData = currentUser;
-    let userUid = userData.uid;
+  	// let currentUser = this.afAuth.auth.currentUser;
+   //  let userData = currentUser;
+   //  let userUid = userData.uid;
 
-  	this.firebase_ref = '/parents'
-    console.log(this.firebase_ref)
+  	// this.firebase_ref = '/parents'
+   //  console.log(this.firebase_ref)
 
-    let x_ref = this.afDatabase.list(this.firebase_ref)
+   //  let x_ref = this.afDatabase.list(this.firebase_ref)
 
-    this.children_list = this.x_ref.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
-    // this.items = db.list('items')
-    console.log(this.children_list)
+   //  this.children_list = this.x_ref.snapshotChanges().map(changes => {
+   //    return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+   //  });
+   //  // this.items = db.list('items')
+   //  console.log(this.children_list)
   }
 
   ionViewDidLoad() {
